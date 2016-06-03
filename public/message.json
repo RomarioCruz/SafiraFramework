@@ -1,0 +1,17 @@
+{
+    "authSuccess": "Seja Bem Vindo!",
+    "authInvalid": "Usuário inexistente ou senha inválida!",
+    "userInactive": "Usuário não ativo no sistema.",
+    "logoutSuccess": "Você foi desconectado do sistema.",
+    "formInvalid": "<b>Inválido!</b> Os dados informados estão inválidos, verifique, por favor.",
+    "fieldInvalid": "O campo $field é obrigatório!",
+    "indexError": "Ocorreu um erro na listagem dos dados. Tente novamente mais tarde!",
+    "insertSuccess": "O registro foi criado com sucesso!.",
+    "insertError": "O registro não pode ser criado. Tente novamente mais tarde!",
+    "updateSuccess": "O registro foi atualizado com sucesso!",
+    "updateError": "O registro não pode ser atualizado. Tente novamente mais tarde!",
+    "deleteSuccess": "O registro foi apagado com sucesso!",
+    "deleteError": "O registro não pode ser deletado. Tente novamente mais tarde!",
+    "registerNotFound": "O registro não foi encontrado!",
+    "noPermission": "Você não possui <b>PERMISSÃO</b> para acessar essa funcionalidade."
+}

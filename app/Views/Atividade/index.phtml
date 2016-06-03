@@ -1,0 +1,102 @@
+<a type="button" class="btn btn-success" href="/atividade/add"><i class="glyphicon glyphicon-plus"></i> Novo</a>
+
+<div class="panel panel-default divFiltro">
+    <div class="panel-body">
+        <div class="row">
+
+            <form class="form-horizontal" method="post" action="/atividade/index">
+                <div class="form-group">
+                    <label for="projeto" class="col-sm-2 control-label">Projeto </label>
+                    <div class="col-sm-5">
+                        <select class="form-control" name="projeto" id="projeto">
+                            <option value="">-- Selecione --</option>
+                            <?php foreach ($objProjetos as $obj) { ?>
+                                <option value="<?=$obj->getId();?>"><?=$obj->getDescricao();?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="usuario" class="col-sm-2 control-label">Responsável</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" name="usuario" id="usuario">
+                            <option value="">-- Selecione --</option>
+                            <?php foreach ($objResponsavel as $obj) { ?>
+                                <option value="<?= $obj->getId(); ?>"><?= $obj->getNome(); ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="statusAtividade" class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" name="statusAtividade" id="statusAtividade">
+                            <option value="">-- Selecione --</option>
+                            <?php foreach ($objStatus as $objSt) { ?>
+                                <option value="<?=$objSt->getId();?>"><?=$objSt->getDescricao();?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Filtrar</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<?php
+if (count($entity) > 0) {
+?>
+    <table class="table" style="margin-top: 10px;">
+        <thead> 
+            <tr> 
+                <th>Projeto</th>
+                <th>Descrição</th>
+                <th>Responsável</th>
+                <th>Data Início</th>
+                <th>Prazo</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($entity as $atividade): ?>
+                <tr>
+                    <td><?php echo $atividade->getProjeto()->getDescricao(); ?></td>
+                    <td><?php echo $atividade->getDescricao(); ?></td>
+                    <td><?php echo $atividade->getUsuario()->getNome(); ?></td>
+                    <td><?php echo $atividade->getDataInicio()->format('d/m/Y H:i'); ?></td>
+                    <td><?php echo $atividade->getPrazo() . " horas"; ?></td>
+                    <td><?php echo $atividade->getStatusAtividade()->getDescricao(); ?></td>
+                    <td>
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="/atividade/edit/<?= $atividade->getId() ?>"><i class="glyphicon glyphicon-edit"></i> Editar</a></li>
+                                <li><a href="/atividade/delete/<?= $atividade->getId() ?>"><i class="glyphicon glyphicon-trash"></i> Excluir</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <?php echo $pagination; ?>
+<?php } else { ?>
+    <div style="margin-top: 30px;">
+        <blockquote>
+            <p>Sem registros</p>
+        </blockquote>
+    </div>
+<?php }
+

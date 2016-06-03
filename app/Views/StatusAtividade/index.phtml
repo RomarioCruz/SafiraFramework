@@ -1,0 +1,49 @@
+<a type="button" class="btn btn-success" href="/statusAtividade/add"><i class="glyphicon glyphicon-plus"></i> Novo</a>
+
+<?php
+if (count($entity) > 0) {
+?>
+    <table class="table" style="margin-top: 20px;">
+        <thead> 
+            <tr> 
+                <th>#</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($entity as $statusAtividade): ?>
+                <tr>
+                    <td><?php echo $statusAtividade->getId(); ?></td>
+                    <td><?php echo $statusAtividade->getDescricao(); ?></td>
+                    <td>
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="/statusAtividade/edit/<?= $statusAtividade->getId() ?>"><i class="glyphicon glyphicon-edit"></i> Editar</a></li>
+                                <li><a href="/statusAtividade/delete/<?= $statusAtividade->getId() ?>"><i class="glyphicon glyphicon-trash"></i> Excluir</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <?php echo $pagination; ?>
+<?php } else { ?>
+<!--    <div class="panel panel-default" style="margin-top: 30px;">
+        <div class="panel-body">
+            Sem registros
+        </div>
+    </div>-->
+    <div style="margin-top: 30px;">
+        <blockquote>
+            <p>Sem registros</p>
+        </blockquote>
+    </div>
+<?php }
+

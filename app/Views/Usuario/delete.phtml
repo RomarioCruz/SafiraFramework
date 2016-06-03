@@ -1,0 +1,39 @@
+<form class="form-horizontal" method="post" action="/usuario/delete/<?=$entity->getId()?>">
+    <div class="hidden">
+        <input class="hidden" type="hidden" name="id" value="<?=$entity->getId()?>"><br/>
+    </div>
+    <div class="form-group">
+        <label for="nome" class="col-sm-2 control-label">Nome</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="nome" name="nome" value="<?= $entity->getNome(); ?>" required="true" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="login" class="col-sm-2 control-label">Login</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="login" name="login" value="<?= $entity->getLogin(); ?>" required="true" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="senha" class="col-sm-2 control-label">Senha</label>
+        <div class="col-sm-5">
+            <input type="password" class="form-control" id="senha" name="senha" value="<?= $entity->getSenha(); ?>" required="true" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="perfil" class="col-sm-2 control-label">Perfil</label>
+        <div class="col-sm-5">
+            <select class="form-control" name="perfil" id="perfil" required="true" disabled>
+                <option>-- Selecione --</option>
+                <option value="1" <?php if($entity->getPerfil() == "1"){echo "selected";} ?>>Administrador</option>
+                <option value="2" <?php if($entity->getPerfil() == "2"){echo "selected";} ?>>Usuário Comum</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">Excluir</button>
+            <a type="button" class="btn btn-danger" href="/usuario">Voltar</a>
+        </div>
+    </div>
+</form>

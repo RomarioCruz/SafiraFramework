@@ -1,0 +1,54 @@
+<form class="form-horizontal" method="post" action="/atividade/delete/<?=$entity->getId()?>">
+    <div class="hidden">
+        <input class="hidden" type="hidden" name="id" value="<?=$entity->getId()?>"><br/>
+    </div>
+    <div class="form-group">
+        <label for="descricao" class="col-sm-2 control-label">Descrição</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição da Atividade" value="<?= $entity->getDescricao(); ?>" required="true" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="usuario" class="col-sm-2 control-label">Responsável</label>
+        <div class="col-sm-8">
+            <select class="form-control" name="usuario" id="usuario" required="true" disabled>
+                <option>-- Selecione --</option>
+                <?php foreach ($objResponsavel as $obj) { ?>
+                    <option value="<?=$obj->getId();?>" <?php if($entity->getUsuario()->getId() == $obj->getId()){echo "selected";} ?>><?=$obj->getNome();?></option>
+                <?php } ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="prazo" class="col-sm-2 control-label">Prazo</label>
+        <div class="col-sm-3">
+            <div class="input-group">
+                <input type="number" class="form-control" id="prazo" name="prazo" placeholder="" value="<?= $entity->getPrazo(); ?>" required="true" disabled>
+                <span class="input-group-addon" id="sizing-addon2">horas</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="dataInicio" class="col-sm-2 control-label">Data Início</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control dataField" id="dataInicio" name="dataInicio" placeholder="" value="<?= $entity->getDataInicio()->format('d/m/Y H:i'); ?>" required="true" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="statusAtividade" class="col-sm-2 control-label">Status</label>
+        <div class="col-sm-5">
+            <select class="form-control" name="statusAtividade" id="statusAtividade" required="true" disabled>
+                <option>-- Selecione --</option>
+                <?php foreach ($objStatus as $objSt) { ?>
+                    <option <?php if($entity->getStatusAtividade()->getId() == $objSt->getId()){echo "selected";} ?> value="<?=$objSt->getId();?>"><?=$objSt->getDescricao();?></option>
+                <?php } ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">Excluir</button>
+            <a type="button" class="btn btn-danger" href="/atividade">Voltar</a>
+        </div>
+    </div>
+</form>

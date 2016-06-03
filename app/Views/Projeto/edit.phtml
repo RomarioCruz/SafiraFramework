@@ -1,0 +1,21 @@
+<form class="form-horizontal" method="post" action="/projeto/edit/<?=$entity->getId()?>">
+    <div class="hidden">
+        <input class="hidden" type="hidden" name="id" value="<?=$entity->getId()?>"><br/>
+    </div>
+    <div class="form-group">
+        <label for="descricao" class="col-sm-2 control-label">Descrição <span class="text-danger">*</span></label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="descricao" name="descricao" value="<?= $entity->getDescricao(); ?>" maxlength="120" required="true" autocomplete="off" onpaste="return false;" ondrop="return false;">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">Atualizar</button>
+            <a type="button" class="btn btn-danger" href="/projeto">Voltar</a>
+        </div>
+    </div>
+</form>
+
+<div class="col-sm-offset-2 divCamposObrigatorios">
+    <span class="text-danger">*</span> Campos obrigatórios
+</div>

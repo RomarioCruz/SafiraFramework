@@ -1,0 +1,124 @@
+<div class="panel panel-default divFiltro">
+    <div class="panel-body">
+        <div class="row">
+            <form class="form-horizontal" method="post" action="/atividade/controleAtividade">
+                <div class="form-group">
+                    <label for="projeto" class="col-sm-2 control-label">Projeto </label>
+                    <div class="col-sm-5">
+                        <select class="form-control" name="projeto" id="projeto">
+                            <option value="">-- Selecione --</option>
+                            <?php foreach ($objProjetos as $obj) { ?>
+                                <option value="<?=$obj->getId();?>"><?=$obj->getDescricao();?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="statusAtividade" class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" name="statusAtividade" id="statusAtividade">
+                            <option value="">-- Selecione --</option>
+                            <?php foreach ($objStatus as $objSt) { ?>
+                                <option value="<?=$objSt->getId();?>"><?=$objSt->getDescricao();?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Filtrar</button>
+                    </div>
+                </div>
+
+            </form>
+            
+            
+        </div>
+    </div>
+</div>
+
+<?php
+if (count($entity) > 0) {
+?>
+    <table class="table table-striped table-hover" style="margin-top: 10px;">
+        <thead> 
+            <tr> 
+                <th>Projeto</th>
+                <th>Descrição</th>
+                <th>Responsável</th>
+                <th>Data Início</th>
+                <th>Prazo</th>
+                <th>Status</th>
+                <th class="centro">Semafóro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($entity as $atividade): ?>
+                <tr>
+                    <td><?php echo $atividade->getProjeto()->getDescricao(); ?></td>
+                    <td><?php echo $atividade->getDescricao(); ?></td>
+                    <td><?php echo $atividade->getUsuario()->getNome(); ?></td>
+                    <td><?php echo $atividade->getDataInicio()->format('d/m/Y H:i'); ?></td>
+                    <td><?php echo $atividade->getPrazo() . " horas"; ?></td>
+                    <td><?php echo $atividade->getStatusAtividade()->getDescricao(); ?></td>
+                    <td class="centro">
+                        <?php
+                        $prazo = $atividade->getPrazo() * 60;
+                        
+                        $dataInicio = $atividade->getDataInicio();
+                        $dataFim = $atividade->getDataFim();
+                        if(!$dataFim) {
+                            $dataAtual = new DateTime('now');
+                            $diffTempoAtual = $dataInicio->diff($dataAtual, false);
+                            $tempoAtual = ($diffTempoAtual->d * 60 * 24) + ($diffTempoAtual->h * 60) + $diffTempoAtual->i;
+                            if ($diffTempoAtual->invert == 1) {
+                                $tempoAtual = 0;
+                            }
+                            
+                            $calc = ($tempoAtual/$prazo) * 100;
+                        } else {
+                            $diffTarefa = $dataInicio->diff($dataFim);
+                            $tempoExecucaoTarefa = ($diffTarefa->d * 60 * 24) + ($diffTarefa->h * 60) + $diffTarefa->i;
+                            $calc = ($tempoExecucaoTarefa/$prazo) * 100;
+                        }
+                        
+                        if($calc < 70) {
+                            $color = "badge-success";
+                        } else if ($calc >= 70 && $calc <= 100){
+                            $color = "badge-warning";
+                        } else {
+                            $color = "badge-danger";
+                        }
+                        
+                        ?>
+                        <span class="badge <?=$color?>">&nbsp;</span>
+                    </td>
+                    <td>
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="/atividade/mudarStatus/idAtividade/<?=$atividade->getId()?>/idStatus/2"><i class="glyphicon glyphicon-play text-success"></i> Em Andamento</a></li>
+                                <li><a href="/atividade/mudarStatus/idAtividade/<?=$atividade->getId()?>/idStatus/3"><i class="glyphicon glyphicon-pause text-danger"></i> Pausado</a></li>
+                                <li><a href="/atividade/mudarStatus/idAtividade/<?=$atividade->getId()?>/idStatus/4"><i class="glyphicon glyphicon-check text-primary"></i> Finalizado</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <?php echo $pagination; ?>
+<?php } else { ?>
+    <div style="margin-top: 30px;">
+        <blockquote>
+            <p>Sem registros</p>
+        </blockquote>
+    </div>
+<?php }
+

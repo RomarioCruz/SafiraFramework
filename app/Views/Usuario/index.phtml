@@ -1,0 +1,50 @@
+<a type="button" class="btn btn-success" href="/usuario/add"><i class="glyphicon glyphicon-plus"></i> Novo</a>
+
+<?php
+if (count($entity) > 0) {
+?>
+    <table class="table" style="margin-top: 20px;">
+        <thead> 
+            <tr> 
+                <th>Nome</th>
+                <th>Login</th>
+                <th>Perfil</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($entity as $usuario): ?>
+                <tr>
+                    <td><?php echo $usuario->getNome(); ?></td>
+                    <td><?php echo $usuario->getLogin(); ?></td>
+                    <td><?php if($usuario->getPerfil() == "1"){echo "Administrador";}else{echo "Usuário Comum";} ?></td>
+                    <td>
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="/usuario/edit/<?= $usuario->getId() ?>"><i class="glyphicon glyphicon-edit"></i> Editar</a></li>
+                                <li><a href="/usuario/delete/<?= $usuario->getId() ?>"><i class="glyphicon glyphicon-trash"></i> Excluir</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <?php echo $pagination; ?>
+<?php } else { ?>
+<!--    <div class="panel panel-default" style="margin-top: 30px;">
+        <div class="panel-body">
+            Sem registros
+        </div>
+    </div>-->
+    <div style="margin-top: 30px;">
+        <blockquote>
+            <p>Sem registros</p>
+        </blockquote>
+    </div>
+<?php }
+
