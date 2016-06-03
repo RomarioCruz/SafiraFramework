@@ -1,0 +1,27 @@
+{
+    "name": "son/mvc",
+    "require": {
+        "php": ">=5.5",
+        "doctrine/orm": "*"
+    },
+    "minimum-stability": "alpha",
+    "authors": [
+        {
+            "name": "Romario Carvalho Cruz",
+            "email": "romarioeng@gmail.com"
+        },
+        {
+            "name": "Anderson Silva Santana",
+            "email": "anderson002@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Safira": "vendor",
+            "app": "/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
